@@ -7,7 +7,7 @@ def index(request):
     return render(request, 'melodyMeter/index.html', context=context_dict)
 
 def albums(request):
-    return HttpResponse("Albums")
+    return render(request, 'melodyMeter/albums.html')
 
 def login(request):
     return HttpResponse("Log In")
@@ -16,7 +16,7 @@ def signup(request):
     return HttpResponse("Sign Up")
 
 def profile(request):
-    return HttpResponse("Profile")
+    return render(request, 'melodyMeter/profile.html')
 
 def addalbum(request):
     return HttpResponse("Add Album")
