@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -14,6 +15,11 @@ class UserProfile(models.Model):
 class Album(models.Model):
     name = models.CharField(max_length=128)
     genre = models.CharField(max_length=256)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Album, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

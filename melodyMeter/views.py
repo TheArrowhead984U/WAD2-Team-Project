@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm
+from melodyMeter.models import Album, Song
 
 # Create your views here.
 
@@ -12,7 +13,28 @@ def index(request):
     return render(request, 'melodyMeter/index.html', context=context_dict)
 
 def albums(request):
-    return render(request, 'melodyMeter/albums.html')
+    album_list = Album.objects.order_by('-name')[:5]
+
+    context_dict = {}
+    context_dict['albums'] = album_list
+
+    return render(request, 'melodyMeter/albums.html', context=context_dict)
+
+def show_album(request, album_name_slug):
+    context_dict = {}
+
+    try:
+        album = Album.objects.get(slug=album_name_slug)
+
+        songs = Song.objects.filter(album=album)
+
+        context_dict['songs'] = songs
+        context_dict['album'] = album
+    except Album.DoesNotExist:
+        context_dict['album'] = None
+        context_dict['songs'] = None
+
+    return render(request, 'melodyMeter/album.html', context=context_dict)
 
 @login_required
 def profile(request):
@@ -38,7 +60,7 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            if 'picture' in request.FILES['picture']:
+            if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
 
             profile.save()
@@ -63,7 +85,7 @@ def login(request):
 
         if user:
             if user.is_active:
-                login(request, user)
+                auth_login(request, user)
                 return redirect(reverse('melodyMeter:index'))
             else:
                 return HttpResponse("Your MelodyMeter account is disabled.")
