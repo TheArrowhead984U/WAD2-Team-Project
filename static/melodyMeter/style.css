@@ -2,27 +2,30 @@
 #Home {
 	color: white;
 	background-color: #272e73;
-	width: 500px;
-	height: 500px;
+	width: 50%;/*500px;*/
+	height: 80%;/*750px;*/
 	border-radius: 25px;
 	padding: 20px;
 	flex: 1;
-	font-size: 30px
+	font-size: 250%;
+	margin-top: 10%;
 }
 
 
 #container {
 	display: flex;
-	height: 500px;
+	/*height: 100%;*/
 	margin: 50px;
 }
 
+/*
 br {
 	display:block;
-	margin-top:200px;
-	line-height:200px;
+	margin-top:150px;
+	line-height:150px;
 	content: '';
 }
+*/
 
 body {
 	margin: 0;
@@ -53,9 +56,10 @@ body {
 	align-items: center;
 	justify-content: center;
 	border-radius: 50px;
-	width: 20%;
+	width: fit-content;
 	margin: auto;
 	padding: 0;
+
 }
 
 #top-bar {
@@ -94,6 +98,7 @@ li {
 }
 
 li a.bar-entry:hover {
+	border-radius: 50px;
   	background-color: #000099;
 }
 

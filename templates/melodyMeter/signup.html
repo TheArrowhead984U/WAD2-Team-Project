@@ -1,0 +1,24 @@
+{% extends 'melodyMeter/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Register
+{% endblock %}
+
+{% block body_block %}
+<div id="Home">
+	<h1>Register for MelodyMeter</h1>
+	{% if registered %}
+	Thanks for registering!
+	{% else %}
+	Register here!
+	<form id="user_form" method="post" action="{% url 'melodyMeter:signup' %}" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ user_form.as_p }}
+		{{ profile_form.as_p }}
+
+		<input type="submit" value="Register" />
+	</form>
+	{% endif %}
+</div>
+{% endblock %}
