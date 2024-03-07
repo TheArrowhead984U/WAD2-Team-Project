@@ -8,6 +8,17 @@ Albums
 {% block body_block %}
 	<div id="Home">
 		<h1>Albums:</h1>
-		<p>Here we'll show albums</p>
+		{% if albums %}
+		<ul>
+			{% for album in albums %}
+				<li>
+					<a href="{% url 'melodyMeter:show_album' album.slug %}">{{ album.name }}</a>
+				</li>
+				<br />
+			{% endfor %}
+		</ul>
+		{% else %}
+		<strong>There are no albums present.</strong>
+		{% endif %}
 	</div>
 {% endblock %}

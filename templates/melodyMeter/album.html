@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>MelodyMeter</title>
+	</head>
+
+	<body>
+		<div>
+			{% if album %}
+				<h1>{{ album.name }}</h1>
+				{% if songs %}
+					<ul>
+						{% for song in songs %}
+						<li>{{ song.name }}</a></li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<strong>No songs currently in album.</strong>
+				{% endif %}
+			{% else %}
+				The specified album does not exist.
+			{% endif %}
+		</div>
+	</body>
+</html>
