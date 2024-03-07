@@ -7,13 +7,17 @@ Home
 
 {% block body_block %}
 	<div id="Home">
-		<h1>Welcome!</h1>
+		{% if user.is_authenticated %}
+			<h1>Welcome, {{ user.username }}!</h1>
+		{% else %}
+			<h1>Welcome!</h1>
+		{% endif %}
 		<p>Want to rate your favourite songs and albums?</p>
 		<p>Well, you've come to the right place!</p>
 		<p>Just make an account or log in and get rating!</p>
 	</div>
 	<div>
-		<img src="{% static 'melodyMeter/logo.avif' %}" width=500px; height=500px>
+		<img src="{% static 'melodyMeter/logo.avif' %}" style="margin-top:40%; height:auto;width:90%">
 	</div>
 </ul>
 {% endblock %}
