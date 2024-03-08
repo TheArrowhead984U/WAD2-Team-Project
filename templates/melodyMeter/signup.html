@@ -2,22 +2,22 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Register
+	Sign Up
 {% endblock %}
 
 {% block body_block %}
 <div id="Home">
-	<h1>Register for MelodyMeter</h1>
+	<h1>Sign up for MelodyMeter</h1>
 	{% if registered %}
-	Thanks for registering!
+	Thanks for signing up!
 	{% else %}
-	Register here!
+	Sign up here!
 	<form id="user_form" method="post" action="{% url 'melodyMeter:signup' %}" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ user_form.as_p }}
 		{{ profile_form.as_p }}
 
-		<input type="submit" value="Register" />
+		<input type="submit" value="Sign Up" />
 	</form>
 	{% endif %}
 </div>
