@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from melodyMeter.forms import UserForm, UserProfileForm
+from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
 from melodyMeter.models import Album, Song
 
 # Create your views here.
@@ -41,8 +41,17 @@ def profile(request):
     return render(request, 'melodyMeter/profile.html')
 
 @login_required
-def addalbum(request):
-    return HttpResponse("Add Album")
+def add_album(request):
+    form = AlbumForm()
+
+    if request.method == 'POST':
+        form = AlbumForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/melodyMeter/')
+        else:
+            print(form.errors)
+    return render(request, 'melodyMeter/addalbum.html', {'form': form})
 
 def signup(request):
     registered = False

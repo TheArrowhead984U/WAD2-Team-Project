@@ -1,12 +1,12 @@
 {% extends 'melodyMeter/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Albums
 {% endblock %}
 
 {% block body_block %}
-	<div id="Home">
+	<div class="contentBox">
 		<h1>Albums:</h1>
 		{% if albums %}
 		<ul>
@@ -20,5 +20,6 @@ Albums
 		{% else %}
 		<strong>There are no albums present.</strong>
 		{% endif %}
+		<a href="{% url 'melodyMeter:add-album' %}">Add a New Album</a>
 	</div>
 {% endblock %}

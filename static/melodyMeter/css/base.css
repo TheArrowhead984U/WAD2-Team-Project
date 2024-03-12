@@ -1,0 +1,105 @@
+/* Home Page CSS */
+.contentBox {
+	color: white;
+	background-color: #272e73;
+	/*width: 50%;/*500px;*/
+	/*height: 80%;/*750px;*/
+	border-radius: 25px;
+	padding: 20px;
+	flex: 1;
+	font-size: 250%;
+	margin-top: 10%;
+}
+
+
+#container {
+	display: flex;
+	/*height: 100%;*/
+	margin: 50px;
+}
+
+/*
+br {
+	display:block;
+	margin-top:150px;
+	line-height:150px;
+	content: '';
+}
+*/
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#content {
+	width: 100%;
+	list-style-type: none;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Navbars CSS */
+#bottom-bar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#bottom-bar {
+	font-size: 40px;
+	background-color: #272e73;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50px;
+	width: fit-content;
+	margin: auto;
+	padding: 0;
+
+}
+
+#top-bar {
+	font-size: 40px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	list-style-type: none;
+  	margin: 0;
+  	padding: 0;
+  	overflow: hidden;
+  	background-color: #272e73;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+li {
+  	float: left;
+	text: center;
+	justify-content: center;
+	/*display: inline-block;*/
+}
+
+.bar-entry {
+  	display: block;
+  	color: white;
+  	text-align: center;
+	justify-content: center;
+  	padding: 14px 16px;
+  	text-decoration: none;
+}
+
+.bar-entry strong {
+	font-size: 50px;
+}
+
+li a.bar-entry:hover {
+	border-radius: 50px;
+  	background-color: #000099;
+}
+
+

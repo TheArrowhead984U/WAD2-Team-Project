@@ -1,27 +1,24 @@
-<!DOCTYPE html>
+{% extends 'melodyMeter/base.html' %}
+{% load static %}
 
-<html>
-
-	<head>
-		<title>MelodyMeter</title>
-	</head>
-
-	<body>
-		<div>
-			{% if album %}
-				<h1>{{ album.name }}</h1>
-				{% if songs %}
-					<ul>
-						{% for song in songs %}
-						<li>{{ song.name }}</a></li>
-						{% endfor %}
-					</ul>
-				{% else %}
-					<strong>No songs currently in album.</strong>
-				{% endif %}
+{% block title_block %}
+	MelodyMeter
+{% endblock %}
+{% block body_block %}
+	<div class='contentBox'>
+		{% if album %}
+			<h1>{{ album.name }}</h1>
+			{% if songs %}
+				<ul>
+					{% for song in songs %}
+					<li>{{ song.name }}</a></li>
+					{% endfor %}
+				</ul>
 			{% else %}
-				The specified album does not exist.
+				<strong>No songs currently in album.</strong>
 			{% endif %}
-		</div>
-	</body>
-</html>
+		{% else %}
+			The specified album does not exist.
+		{% endif %}
+	</div>
+{% endblock %}
