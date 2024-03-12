@@ -9,6 +9,6 @@ urlpatterns = [
         path('log-in/', views.login, name='login'),
         path('sign-up/', views.signup, name='signup'),
         path('profile/', views.profile, name='profile'),
+        path('albums/add-album/', views.add_album, name='add-album'),
         path('albums/<slug:album_name_slug>/', views.show_album, name='show_album'),
-        path('albums/add-album/', views.addalbum, name='add-album'),
 ]

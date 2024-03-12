@@ -1,12 +1,12 @@
 {% extends 'melodyMeter/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Log-In
 {% endblock %}
 
 {% block body_block %}
-	<div id="Home">
+	<div class="contentBox">
 		<h1>Log-In:</h1>
 		<form id="login_form" method="post" action="{% url 'melodyMeter:login' %}">
 			{% csrf_token %}
