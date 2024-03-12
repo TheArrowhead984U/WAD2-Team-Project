@@ -1,27 +1,55 @@
+{% load staticfiles %}
 <!DOCTYPE html>
-
 <html>
 
-	<head>
-		<title>MelodyMeter</title>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MelodyMeter</title>
+    <link rel="stylesheet" href="{% static 'melodyMeter/style.css' %}">
+    
+</head>
 
-	<body>
-		<div>
-			{% if album %}
-				<h1>{{ album.name }}</h1>
-				{% if songs %}
-					<ul>
-						{% for song in songs %}
-						<li>{{ song.name }}</a></li>
-						{% endfor %}
-					</ul>
-				{% else %}
-					<strong>No songs currently in album.</strong>
-				{% endif %}
-			{% else %}
-				The specified album does not exist.
-			{% endif %}
-		</div>
-	</body>
+<body>
+
+	<ul id="top-bar">
+		<li><a class="bar-entry" href="{% url 'melodyMeter:index' %}"><img src="{% static 'melodyMeter/home.png' %}" height=100px></a></li>
+		<li style="float: none; display: inline-block; vertical-align: middle" class="bar-entry"><strong>MELODY METER</strong></li>
+		<li style="float:right"><a class="bar-entry" href="{% url 'melodyMeter:profile' %}"><img src="{% static 'melodyMeter/profile.png' %}" height=100px></a></li>
+	</ul>
+	<br />
+
+    <div id = "container">
+        {% if album %}
+        <h1>{{ album.name }}</h1>
+        {% if songs %}
+        <ul>
+            {% for song in songs %}
+            <li>
+                {{ song.name }}
+                <fieldset class="rating">
+                    <input type="radio" id="{{ song.id }}_star5" name="{{ song.id }}_rating" value="5">
+                    <label for="{{ song.id }}_star5">5 stars</label>
+                    <input type="radio" id="{{ song.id }}_star4" name="{{ song.id }}_rating" value="4">
+                    <label for="{{ song.id }}_star4">4 stars</label>
+                    <input type="radio" id="{{ song.id }}_star3" name="{{ song.id }}_rating" value="3">
+                    <label for="{{ song.id }}_star3">3 stars</label>
+                    <input type="radio" id="{{ song.id }}_star2" name="{{ song.id }}_rating" value="2">
+                    <label for="{{ song.id }}_star2">2 stars</label>
+                    <input type="radio" id="{{ song.id }}_star1" name="{{ song.id }}_rating" value="1">
+                    <label for="{{ song.id }}_star1">1 star</label>
+                </fieldset>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>No songs currently in album.</strong>
+        {% endif %}
+        {% else %}
+        The specified album does not exist.
+        {% endif %}
+    </div>
+</body>
+
 </html>

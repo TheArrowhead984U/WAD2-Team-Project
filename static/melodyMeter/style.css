@@ -102,4 +102,30 @@ li a.bar-entry:hover {
   	background-color: #000099;
 }
 
+.rating {
+    display: inline-block;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    color: #aaa;
+}
+
+.rating label:before {
+    content: '\2605';
+    font-size: 24px;
+}
+
+.rating input:checked~label {
+    color: #e7bd06;
+}
+
+.rating input:checked~label:before {
+    color: #e7bd06;
+}
+
 
