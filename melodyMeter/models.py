@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
@@ -34,7 +35,7 @@ class Album(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = capitalise(self.name)
-        self.artist = capitalise(self.artist)
+        #self.artist = capitalise(self.artist)
         self.slug = slugify(self.name)
         super(Album, self).save(*args, **kwargs)
 
@@ -51,19 +52,26 @@ class Song(models.Model):
     def __str__(self):
         return self.name
 
-@receiver(post_save, sender=Album)
-def create_album_songs(sender, instance, created, **kwargs):
-    if created:
-        api = azapi.AZlyrics(accuracy=0.5)
-        api.artist = instance.artist
-        songs = api.getSongs()
-        Songs = []
-        for x,each in enumerate(songs):
-            if songs[each]['album'] == instance.name:
-                Songs.append(each)
-        #print(Songs)
-        #print('\n\n', songs)
-        for song in Songs:
-            #print('\n',songs[song])
-            Song.objects.create(album=instance, name=song, length='3:45')
-        #Song.objects.create(album=instance, name='Song 2', length='4:20')
+#@receiver(post_save, sender=Album)
+#def create_album_songs(sender, instance, created, **kwargs):
+#    if created:
+#        api = azapi.AZlyrics(accuracy=0.5)
+#        api.artist = instance.artist
+#        songs = api.getSongs()
+#        Songs = []
+#        if type(songs) == []:
+#            for x,each in enumerate(songs):
+#                if songs[each]['album'] == instance.name:
+#                    Songs.append(each)
+#        else:
+#            messages.warning(None, f"No songs found for artist { instance.artist }")
+#        #print(Songs)
+#        #print('\n\n', songs)
+#        if Songs == []:
+#            messages.warning(None, f"No songs found for album { instance.name }")
+#            instance.delete()
+#        else:
+#            for song in Songs:
+#                #print('\n',songs[song])
+#                Song.objects.create(album=instance, name=song, length='3:45')
+#                #Song.objects.create(album=instance, name='Song 2', length='4:20')

@@ -20,6 +20,14 @@ Albums
 		{% else %}
 		<strong>There are no albums present.</strong>
 		{% endif %}
-		<a href="{% url 'melodyMeter:add-album' %}">Add a New Album</a>
 	</div>
+{% endblock %}
+
+{% block bottombar %}
+	{% if not user.is_authenticated %}
+		<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}">Log-In</a></li>
+		<li><a class="bar-entry" href="{% url 'melodyMeter:signup' %}">Sign-Up</a></li>
+	{% else %}
+		<li><a class="bar-entry" href="{% url 'melodyMeter:add-album' %}">Add a New Album</a></li>
+	{% endif %}
 {% endblock %}

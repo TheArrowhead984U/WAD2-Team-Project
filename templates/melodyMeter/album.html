@@ -4,15 +4,24 @@
 {% block title_block %}
 	MelodyMeter
 {% endblock %}
-{% block body_block %}
+
+{% block body_block %}	
 	<div class='contentBox'>
+		<div class="popup" id="myPopup">Popup text</div>
 		{% if album %}
-			<h1>{{ album.name }}</h1>
+		<h1>{{ album.name }} - {{ album.year }}</h1>
 			{% if songs %}
-				<ul>
+				<ul id="songList">
 					{% for song in songs %}
-					<li>{{ song.name }}</a></li>
-					<br />
+						<li>
+							{{ song.name }}
+							<button class="alertButton" 
+								data-artist="{{ album.artist }}" 
+								data-song-id="{{ song.name }}" 
+								type="button">Lyrics
+							</button>
+						</li>
+						<br />
 					{% endfor %}
 				</ul>
 			{% else %}
@@ -22,4 +31,43 @@
 			The specified album does not exist.
 		{% endif %}
 	</div>
+
+	<script>
+		function myFunction() {
+			var popup = document.getElementById("myPopup");
+                        popup.innerHTML = '';
+			popup.classList.toggle("show");
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('songList').addEventListener('click', function(event) {
+				console.log("Button clicked");
+				if (event.target.classList.contains('alertButton')) {
+					var songId = event.target.dataset.songId;
+					var artist = event.target.dataset.artist;
+					console.log("Song ID:", songId);
+					console.log("Artist:", artist);
+
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState === XMLHttpRequest.DONE) {
+							if (xhr.status === 200) {
+								console.log("Response recieved:", xhr.responseText);
+								//alert('Popup should show!');
+								var response = JSON.parse(xhr.responseText);
+								var popup = document.getElementById("myPopup");
+								popup.innerHTML = '<button onclick="myFunction()" class="close">X</button><h1>Lyrics</h1>' + response.alert_contents.replace(/\n/g, '<br />');
+								popup.classList.toggle("show");
+								//popup.style.visibility = "visible";
+							} else {
+								console.error('Request failed with status:', xhr.status);
+							}
+						}
+					};
+					xhr.open('GET', "{% url 'melodyMeter:get_alert_contents' %}?song_id=" + songId + "&artist=" + artist, true);
+					xhr.send();
+				}
+			});
+		});
+	</script>
 {% endblock %}
