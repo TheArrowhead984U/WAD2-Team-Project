@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
 from melodyMeter.models import Album, Song
+import azapi
 
 # Create your views here.
 
@@ -47,8 +48,29 @@ def add_album(request):
     if request.method == 'POST':
         form = AlbumForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
-            return redirect('/melodyMeter/')
+            album_instance = form.save(commit=False)
+            api = azapi.AZlyrics(accuracy=0.5)
+            api.artist = album_instance.artist
+            songs = api.getSongs()
+            Songs = []
+            album_instance.name = ' '.join([x.capitalize() for x in album_instance.name.split()])
+            if type(songs) == type({}):
+                for x,each in enumerate(songs):
+                    if songs[each]['album'] == album_instance.name:
+                        Songs.append(each)
+            else:
+                print('Artist fail')
+                return HttpResponse("<script>alert('Could not add album as artist could not be found. Hint: Artist names should not start with The'); window.location.href='/melodyMeter/';</script>")
+            if Songs == []:
+                print('Album fail')
+                return HttpResponse("<script>alert('Could not add album as album couldn't be found in artist's catalogue.'); window.location.href='/melodyMeter/';</script>")
+            else:
+                print('Success')
+                album_instance.save()
+                for song in Songs:
+                    Song.objects.create(album=album_instance, name=song, length='3:45')
+                #form.save(commit=True)
+                return redirect('/melodyMeter/albums/'+album_instance.slug)
         else:
             print(form.errors)
     return render(request, 'melodyMeter/addalbum.html', {'form': form})
@@ -103,3 +125,16 @@ def login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'melodyMeter/login.html')
+
+def get_alert_contents(request):
+    api = azapi.AZlyrics()
+    
+    api.artist = request.GET.get('artist')
+    api.title = request.GET.get('song_id')
+    api.getLyrics()
+    if api.lyrics == '':
+        alert_contents = "Couldn't find any lyrics for this song."
+    else:
+        alert_contents = api.lyrics#"This is the generated msg."
+
+    return JsonResponse({'alert_contents':alert_contents})

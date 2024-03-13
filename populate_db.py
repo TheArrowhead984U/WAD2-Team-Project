@@ -55,11 +55,13 @@ def add_album(name, genre, year):
 
 if __name__ == '__main__':
     print('Starting population')
-    populate()
-    #API = azapi.AZlyrics()
+    #populate()
+    API = azapi.AZlyrics()
 
-    #API.artist = 'Slipknot'
-
+    API.artist = 'Slipknot'
+    API.title = 'Disasterpiece'
+    API.getLyrics()
+    print(API.lyrics)
     #API.getSongs()#url='https://www.azlyrics.com/lyrics/slipknot/disasterpiece.html')
 
     #Songs = []

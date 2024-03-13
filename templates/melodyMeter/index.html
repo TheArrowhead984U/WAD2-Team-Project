@@ -8,7 +8,7 @@ Home
 {% block body_block %}
 	<div class="contentBox">
 		{% if user.is_authenticated %}
-			<h1>Welcome, {{ user.username }}!</h1>
+			<h1>Welcome, {{ user.username|title }}!</h1>
 		{% else %}
 			<h1>Welcome!</h1>
 		{% endif %}
@@ -20,4 +20,12 @@ Home
 		<img src="{% static 'melodyMeter/logo.avif' %}" style="margin-top:40%; height:auto;width:90%">
 	</div>
 </ul>
+{% endblock %}
+
+{% block bottombar %}
+	<li><a class="bar-entry" href="{% url 'melodyMeter:albums' %}">Albums</a></li>
+	{% if not user.is_authenticated %}
+		<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}">Log-In</a></li>
+		<li><a class="bar-entry" href="{% url 'melodyMeter:signup' %}">Sign-Up</a></li>
+	{% endif %}
 {% endblock %}
