@@ -46,7 +46,8 @@ def add_album(request):
     form = AlbumForm()
 
     if request.method == 'POST':
-        form = AlbumForm(request.POST)
+        print('Made it to view')
+        form = AlbumForm(request.POST, request.FILES)
         if form.is_valid():
             album_instance = form.save(commit=False)
             api = azapi.AZlyrics(accuracy=0.5)
@@ -66,12 +67,14 @@ def add_album(request):
                 return HttpResponse("<script>alert('Could not add album as album couldn't be found in artist's catalogue.'); window.location.href='/melodyMeter/';</script>")
             else:
                 print('Success')
-                album_instance.save()
+                album_instance.cover = request.FILES['cover']
+                album_instance.save(commit=True) 
                 for song in Songs:
                     Song.objects.create(album=album_instance, name=song, length='3:45')
                 #form.save(commit=True)
                 return redirect('/melodyMeter/albums/'+album_instance.slug)
         else:
+            print('Error with form')
             print(form.errors)
     return render(request, 'melodyMeter/addalbum.html', {'form': form})
 

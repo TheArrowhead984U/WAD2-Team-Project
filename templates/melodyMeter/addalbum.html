@@ -9,15 +9,16 @@ Add Album
 	<div class="contentBox">
 		<h1>Add an Album:</h1>
 		<div>
-			<form id="AlbumForm" method="post" action="{% url 'melodyMeter:add-album' %}">
+			<form id="AlbumForm" method="post" action="{% url 'melodyMeter:add-album' %}" enctype="multipart/form-data">
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
 			{% endfor %}
 			{% for field in form.visible_fields %}
 				{{ field.errors }}
-				{{ field.help_next }}
+				{{ field.help_text }}
 				{{ field }}
+				<br />
 			{% endfor %}
 			<input type="submit" name="submit" value="Add Album" />
 			</form>
