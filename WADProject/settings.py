@@ -107,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = 'melodyMeter:login'
+LOGOUT_URL = 'melodyMeter:logout'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -127,3 +128,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR, ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,0 +1,26 @@
+{% extends 'melodyMeter/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Add Album
+{% endblock %}
+
+{% block body_block %}
+	<div class="contentBox">
+		<h1>Add an Album:</h1>
+		<div>
+			<form id="AlbumForm" method="post" action="{% url 'melodyMeter:add-album' %}">
+			{% csrf_token %}
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.help_next }}
+				{{ field }}
+			{% endfor %}
+			<input type="submit" name="submit" value="Add Album" />
+			</form>
+		</div>
+	</div>
+{% endblock %}

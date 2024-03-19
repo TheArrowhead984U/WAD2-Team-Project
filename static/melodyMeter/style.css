@@ -1,14 +1,12 @@
 /* Home Page CSS */
 #Home {
-	color: white;
-	background-color: #272e73;
-	width: 50%;/*500px;*/
-	height: 80%;/*750px;*/
+	color: rgb(0, 255, 106);
+
+	
 	border-radius: 25px;
 	padding: 20px;
-	flex: 1;
-	font-size: 250%;
-	margin-top: 10%;
+	font-size: 50px;
+	margin-top: 10px;
 }
 
 
@@ -18,18 +16,22 @@
 	margin: 50px;
 }
 
-/*
+
 br {
 	display:block;
 	margin-top:150px;
 	line-height:150px;
 	content: '';
 }
-*/
+
 
 body {
-	margin: 0;
-	padding: 0;
+	margin: 10;
+	padding: 10;
+	background-image: url("static/melodyMeter/bgimage.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 #content {
@@ -49,8 +51,8 @@ body {
 }
 
 #bottom-bar {
-	font-size: 40px;
-	background-color: #272e73;
+	font-size: 20px;
+	
 	text-align: center;
 	display: flex;
 	align-items: center;
@@ -68,10 +70,10 @@ body {
 	top: 0;
 	width: 100%;
 	list-style-type: none;
-  	margin: 0;
-  	padding: 0;
+  	margin: 5px;
+  	padding: 5px;
   	overflow: hidden;
-  	background-color: #272e73;
+  	background-color: #73272b;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -86,7 +88,7 @@ li {
 
 .bar-entry {
   	display: block;
-  	color: white;
+  	color: rgb(9, 243, 48);
   	text-align: center;
 	justify-content: center;
   	padding: 14px 16px;
@@ -102,4 +104,77 @@ li a.bar-entry:hover {
   	background-color: #000099;
 }
 
+#menuIcon{
+	cursor: pointer;
+	float: right;
+	list-style-type: none;
+	position: relative;
+}
+
+#menuIcon{
+	color: white;
+	text-decoration: none;
+	display: block;
+	padding: 8px;
+
+}
+
+
+#top-bar li {
+	list-style-type: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#profileDropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	right: 0;
+	min-width: 160px;
+	background-color: #f9f9f9;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
+
+.dropdown-toggle:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown-toggle, .dropdown-content a {
+	/* Styling for the dropdown trigger and links */
+	color: #333; /* Text color */
+	text-align: center;
+}
+
+
+
+
+#Sign{
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	border-radius: 8px;
+	color: rgb(94, 243, 9);
+}
+
+#login_form{
+	text-align: center;
+	width: 100%;
+}
 

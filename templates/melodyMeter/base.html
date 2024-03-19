@@ -11,16 +11,79 @@
 			Default Title
 			{% endblock %}
 		</title>
+		<style>
+			
+			body{
+				background-image: url('{% static "melodyMeter/bgimage.jpg" %}');
+				background-position: center center;
+				background-size: cover;
+			}
+			#top-bar {
+        		list-style-type: none;
+        		margin: 0;
+        		padding: 0;
+        		overflow: hidden;
+    		}
+    		#top-bar li {
+        		float: left;
+    		}
+    		#top-bar li a {
+        		display: block;
+        		padding: 14px 16px;
+        		text-decoration: none;
+    		}
+			.navbar{
+				overflow: hidden;
+				width: 100%;
+				font-size: xx-large;
+				background-color: rgb(4, 133, 247);
+			
+			}
+			.navbar a{
+				float: left;
+				display: block;
+				color: #04f818;
+				text-align: center;
+				padding: 14px 16px;
+				text-decoration: none;
+			}
+			.navbar a:hover{
+				background: #0905fc;
+				color: black;
+			}
+			.navbar{
+				margin-top: 140px;
+			}
+			#container{
+				padding-top: 60px;
+			}
+		</style>
+		{% block additional_styles %}{% endblock %}
 	</head>
 
 	<body>
+
 		<ul id="top-bar">
-			<li><a class="bar-entry" href="{% url 'melodyMeter:index' %}"><img src="{% static 'melodyMeter/home.png' %}" height=100px></a></li>
+			<li><a class="bar-entry" href="{% url 'melodyMeter:index' %}"><img src="{% static 'melodyMeter/logoo.png' %}" height=100px></a></li>
 			<li style="float: none; display: inline-block; vertical-align: middle" class="bar-entry"><strong>MELODY METER</strong></li>
-			<li style="float:right"><a class="bar-entry" href="{% url 'melodyMeter:profile' %}"><img src="{% static 'melodyMeter/profile.png' %}" height=100px></a></li>
+			<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}"><img src="{% static 'melodyMeter/profile.png' %}" height="100"></a></li>
 		</ul>
+
+		<div class="navbar">
+			<a href="{% url 'melodyMeter:albums' %}">Albums</a>
+			{% if user.is_authenticated %}
+				<a href="{% url 'melodyMeter:logout'%}">LogOut</a>
+			{% else %}
+				<a href="{% url 'melodyMeter:login' %}">LogIn</a>
+				<a href="{% url 'melodyMeter:signup' %}">SignUp</a>
+			{% endif %}
+		</div>
 		
 		<br />
+
+		
+
+		
 		
 		<div id="container">
 			{% block body_block %}
@@ -29,13 +92,6 @@
 		</div>
 				
 		<br />
-		
-		<div id="bottom-bar">
-			<ul>
-				<li><a class="bar-entry" href="{% url 'melodyMeter:albums' %}">Albums</a></li>
-				<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}">Log-In</a></li>
-				<li><a class="bar-entry" href="{% url 'melodyMeter:signup' %}">Sign-Up</a></li>
-			</ul>
-		</div>
+
 	</body>
 </html>

@@ -1,13 +1,35 @@
 {% extends 'melodyMeter/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Log-In
 {% endblock %}
 
+{% block additional_styles %}
+<style>
+	input[type="submit"] {
+        padding: 10px 20px; /* Increase padding to make the button larger */
+        font-size: 35px; /* Increase font size for better visibility */
+        margin: 10px 0; /* Add some space around the button */
+        cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+        border: none; /* Optional: Remove border */
+        border-radius: 5px; /* Optional: Add rounded corners */
+        background-color: #26fa0a; /* Optional: Change background color */
+        color: white; /* Optional: Change text color */
+    }
+	input[type="text"], input[type="password"] {
+        padding: 10px; /* Increase padding for larger input fields */
+        font-size: 25px;}
+
+	h3{
+		text-align: center;
+	}
+</style>
+{% endblock %}
 {% block body_block %}
 	<div id="Home">
-		<h1>Log-In:</h1>
+	
+		<h3 style="color: rgb(25, 0, 255);">LogIn:</h3>
 		<form id="login_form" method="post" action="{% url 'melodyMeter:login' %}">
 			{% csrf_token %}
 			Username: <input type="text" name="username" value="" size="50" />

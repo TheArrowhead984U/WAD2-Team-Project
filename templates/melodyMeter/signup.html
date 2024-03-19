@@ -4,9 +4,26 @@
 {% block title_block %}
 	Register
 {% endblock %}
+{% block additional_styles %}
+<style>
+	#Sign{
+        
+        font-size: 35px; /* Increase font size for better visibility */
+    }
+	input[type="submit"] {
+        padding: 10px 20px; /* Increase padding to make the button larger */
+        font-size: 35px; /* Increase font size for better visibility */
+        margin: 10px 0; /* Add some space around the button */
+        cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+        border: none; /* Optional: Remove border */
+        border-radius: 5px; /* Optional: Add rounded corners */
+        background-color: #26fa0a; /* Optional: Change background color */
+        color: white; }
+</style>
+{% endblock %}
 
 {% block body_block %}
-<div id="Home">
+<div id="Sign">
 	<h1>Register for MelodyMeter</h1>
 	{% if registered %}
 	Thanks for registering!

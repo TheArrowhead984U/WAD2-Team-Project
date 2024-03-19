@@ -1,0 +1,18 @@
+{% extends 'melodyMeter/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Log-Out
+{% endblock %}
+
+{% block body_block %}
+    <div id="LogoutPage">
+        <link rel="stylesheet" href="{% static 'melodyMeter/style.css' %}">
+        <h3>Log-Out</h3>
+        <p>Are you sure you want to log out?</p>
+        <form id="logout_form" method="post" action="{% url 'melodyMeter:logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="logout" />
+        </form>
+    </div>
+{% endblock %}

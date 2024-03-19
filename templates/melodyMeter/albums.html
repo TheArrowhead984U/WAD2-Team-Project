@@ -1,12 +1,12 @@
 {% extends 'melodyMeter/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Albums
 {% endblock %}
 
 {% block body_block %}
-	<div id="Home">
+	<div class="contentBox">
 		<h1>Albums:</h1>
 		{% if albums %}
 		<ul>
@@ -21,4 +21,13 @@ Albums
 		<strong>There are no albums present.</strong>
 		{% endif %}
 	</div>
+{% endblock %}
+
+{% block bottombar %}
+	{% if not user.is_authenticated %}
+		<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}">Log-In</a></li>
+		<li><a class="bar-entry" href="{% url 'melodyMeter:signup' %}">Sign-Up</a></li>
+	{% else %}
+		<li><a class="bar-entry" href="{% url 'melodyMeter:add-album' %}">Add a New Album</a></li>
+	{% endif %}
 {% endblock %}
