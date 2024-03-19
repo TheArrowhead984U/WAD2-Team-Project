@@ -32,6 +32,7 @@ class Album(models.Model):
     slug = models.SlugField(unique=True)
     artist = models.CharField(max_length=128)
     year = models.IntegerField(default=0)
+    cover = models.ImageField(upload_to='album_covers', blank=True)
 
     def save(self, *args, **kwargs):
         self.name = capitalise(self.name)

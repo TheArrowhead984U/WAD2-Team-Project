@@ -15,11 +15,12 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
 
 class AlbumForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the album name.", label="Album Name")
-    artist = forms.CharField(max_length=128, help_text="Please enter the artist's name.", label="Album Artist")
+    name = forms.CharField(max_length=128, help_text="Album Title: ", label="Album Name")
+    artist = forms.CharField(max_length=128, help_text="Artist: ", label="Album Artist")
     slug = forms.CharField(widget=forms.HiddenInput(), initial=0)
-    year = forms.IntegerField()
+    year = forms.IntegerField(help_text="Release Year: ")
+    cover = forms.ImageField(help_text="Album Cover: ")
 
     class Meta:
         model = Album
-        fields = ('name','artist','year')
+        fields = ('name','artist','year','cover')
