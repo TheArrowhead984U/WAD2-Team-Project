@@ -28,7 +28,7 @@ class UserProfile(models.Model):
 class Album(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
-    genre = models.CharField(max_length=128)
+    #genre = models.CharField(max_length=128)
     slug = models.SlugField(unique=True)
     artist = models.CharField(max_length=128)
     year = models.IntegerField(default=0)
