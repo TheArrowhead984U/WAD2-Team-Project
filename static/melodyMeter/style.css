@@ -102,30 +102,70 @@ li a.bar-entry:hover {
   	background-color: #000099;
 }
 
+#albumName{
+	padding-right: 355px;
+	position: relative; 
+
+}
+
+#blankImage {
+    position: absolute;
+    top: calc(30% + 20px); 
+    left: 0;
+}
+
+/* Star rating styles */
 .rating {
-    display: inline-block;
+	margin-top: auto;
+    float:right;
+	
+	
 }
 
-.rating input {
-    display: none;
+.rating:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
 }
 
-.rating label {
+.rating:not(:checked) > label {
+    float: right;
+    width: 1em;
+    padding: 0 0.1em;
+    overflow: hidden;
+    white-space: nowrap;
     cursor: pointer;
-    color: #aaa;
+    font-size: 200%;
+    line-height: 1.2;
+    color: #ddd;
 }
 
-.rating label:before {
-    content: '\2605';
-    font-size: 24px;
+.rating:not(:checked) > label:before {
+    content: '★';
 }
 
-.rating input:checked~label {
-    color: #e7bd06;
+.rating > input:checked ~ label {
+    color: #f70;
 }
 
-.rating input:checked~label:before {
-    color: #e7bd06;
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
 }
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+.rating > label:active {
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
 
 

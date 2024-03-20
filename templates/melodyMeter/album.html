@@ -19,15 +19,23 @@
 		<li style="float:right"><a class="bar-entry" href="{% url 'melodyMeter:profile' %}"><img src="{% static 'melodyMeter/profile.png' %}" height=100px></a></li>
 	</ul>
 	<br />
+    <br>
+    <br>
+    <br>
+    <br>
+	
 
     <div id = "container">
+		{% block body_block %}
         {% if album %}
-        <h1>{{ album.name }}</h1>
+        <h1 id="albumName">{{ album.name }}</h1>
+        <img id = "blankImage" src="{% static 'melodyMeter/blank_image.jpeg' %}" alt = "Blank Image" style="height: 250px; width: 250px;">
         {% if songs %}
-        <ul>
+        <ul class = "ratingList">
             {% for song in songs %}
-            <li>
+            <li id = "songs">
                 {{ song.name }}
+                <br>
                 <fieldset class="rating">
                     <input type="radio" id="{{ song.id }}_star5" name="{{ song.id }}_rating" value="5">
                     <label for="{{ song.id }}_star5">5 stars</label>
@@ -41,6 +49,7 @@
                     <label for="{{ song.id }}_star1">1 star</label>
                 </fieldset>
             </li>
+            <br>
             {% endfor %}
         </ul>
         {% else %}
@@ -49,7 +58,18 @@
         {% else %}
         The specified album does not exist.
         {% endif %}
+		{% endblock %}
     </div>
+
+	<br />
+
+	<div id="bottom-bar">
+		<ul>
+			<li><a class="bar-entry" href="{% url 'melodyMeter:albums' %}">Albums</a></li>
+			<li><a class="bar-entry" href="{% url 'melodyMeter:login' %}">Log-In</a></li>
+			<li><a class="bar-entry" href="{% url 'melodyMeter:signup' %}">Sign-Up</a></li>
+		</ul>
+	</div>
 </body>
 
 </html>
