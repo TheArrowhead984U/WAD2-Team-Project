@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
 from melodyMeter.models import Album, Song
-import azapi
 import json
 from ytmusicapi import YTMusic
 
@@ -128,7 +127,7 @@ def login(request):
         return render(request, 'melodyMeter/login.html')
 
 def get_alert_contents(request):
-    api = azapi.AZlyrics()
+    #api = azapi.AZlyrics()
     
     #api.artist = request.GET.get('artist')
     #api.title = request.GET.get('song_id')

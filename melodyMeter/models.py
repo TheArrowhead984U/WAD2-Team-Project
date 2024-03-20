@@ -5,7 +5,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import azapi
 
 SMALL_WORDS = ['and', 'the', 'of', 'in', 'on', 'at', 'for', 'to', 'with', 'a', 'an']
 
