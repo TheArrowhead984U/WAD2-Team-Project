@@ -18,9 +18,9 @@ class AlbumForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Album Title: ", label="Album Name")
     artist = forms.CharField(max_length=128, help_text="Artist: ", label="Album Artist")
     slug = forms.CharField(widget=forms.HiddenInput(), initial=0)
-    year = forms.IntegerField(help_text="Release Year: ")
+    #year = forms.IntegerField(help_text="Release Year: ")
     cover = forms.ImageField(help_text="Album Cover: ")
 
     class Meta:
         model = Album
-        fields = ('name','artist','year','cover')
+        fields = ('name','artist','cover')

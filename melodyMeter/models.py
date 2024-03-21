@@ -5,7 +5,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import azapi
 
 SMALL_WORDS = ['and', 'the', 'of', 'in', 'on', 'at', 'for', 'to', 'with', 'a', 'an']
 
@@ -28,7 +27,7 @@ class UserProfile(models.Model):
 class Album(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
-    genre = models.CharField(max_length=128)
+    #genre = models.CharField(max_length=128)
     slug = models.SlugField(unique=True)
     artist = models.CharField(max_length=128)
     year = models.IntegerField(default=0)

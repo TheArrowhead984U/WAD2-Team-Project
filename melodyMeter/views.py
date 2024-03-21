@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
 from melodyMeter.models import Album, Song
-import azapi
+import json
+from ytmusicapi import YTMusic
 
 # Create your views here.
 
@@ -50,29 +51,25 @@ def add_album(request):
         form = AlbumForm(request.POST, request.FILES)
         if form.is_valid():
             album_instance = form.save(commit=False)
-            api = azapi.AZlyrics(accuracy=0.5)
-            api.artist = album_instance.artist
-            songs = api.getSongs()
-            Songs = []
             album_instance.name = ' '.join([x.capitalize() for x in album_instance.name.split()])
-            if type(songs) == type({}):
-                for x,each in enumerate(songs):
-                    if songs[each]['album'] == album_instance.name:
-                        Songs.append(each)
-            else:
-                print('Artist fail')
-                return HttpResponse("<script>alert('Could not add album as artist could not be found. Hint: Artist names should not start with The'); window.location.href='/melodyMeter/';</script>")
-            if Songs == []:
-                print('Album fail')
-                return HttpResponse("<script>alert('Could not add album as album couldn't be found in artist's catalogue.'); window.location.href='/melodyMeter/';</script>")
-            else:
-                print('Success')
-                album_instance.cover = request.FILES['cover']
-                album_instance.save(commit=True) 
-                for song in Songs:
-                    Song.objects.create(album=album_instance, name=song, length='3:45')
-                #form.save(commit=True)
-                return redirect('/melodyMeter/albums/'+album_instance.slug)
+            album_instance.artist = ' '.join([x.capitalize() for x in album_instance.artist.split()])
+            ytmusic = YTMusic()
+            res = ytmusic.search(album_instance.artist + ' ' + album_instance.name)
+            for i in range(len(res)):
+                if res[i]['resultType'] == "album":
+                    break
+            alb = ytmusic.get_album(res[i]['browseId'])
+            songs = alb['tracks']
+            for song in list(songs):
+                print(song['title']) 
+            print('Success')
+            album_instance.cover = request.FILES['cover']
+            album_instance.year = alb['year']
+            album_instance.save() 
+            for song in songs:
+                Song.objects.create(album=album_instance, name=song['title'], length=song['duration'])
+            #form.save(commit=True)
+            return redirect('/melodyMeter/albums/'+album_instance.slug)
         else:
             print('Error with form')
             print(form.errors)
@@ -130,14 +127,25 @@ def login(request):
         return render(request, 'melodyMeter/login.html')
 
 def get_alert_contents(request):
-    api = azapi.AZlyrics()
+    #api = azapi.AZlyrics()
     
-    api.artist = request.GET.get('artist')
-    api.title = request.GET.get('song_id')
-    api.getLyrics()
-    if api.lyrics == '':
-        alert_contents = "Couldn't find any lyrics for this song."
-    else:
-        alert_contents = api.lyrics#"This is the generated msg."
+    #api.artist = request.GET.get('artist')
+    #api.title = request.GET.get('song_id')
+    #api.getLyrics()
+
+    ytmusic = YTMusic()
+    res = ytmusic.search(request.GET.get('artist') + ' ' + request.GET.get('song_id'))
+    for i in range(len(res)):
+        if res[i]['resultType'] == "song":
+            break
+    song = ytmusic.get_watch_playlist(res[i]['videoId'])
+    alert_contents = ytmusic.get_lyrics(song['lyrics'])['lyrics']
 
     return JsonResponse({'alert_contents':alert_contents})
+
+    #if api.lyrics == '':
+    #    alert_contents = "Couldn't find any lyrics for this song."
+    #else:
+    #    alert_contents = api.lyrics#"This is the generated msg."
+
+    #return JsonResponse({'alert_contents':alert_contents})
