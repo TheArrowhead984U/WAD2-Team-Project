@@ -9,6 +9,8 @@ class UserProfile(models.Model):
 
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
+    bio = models.TextField(max_length=500, blank=True)
+
     def __str__(self):
         return self.user.username
 

@@ -1,13 +1,29 @@
 {% extends 'melodyMeter/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
-Profile
+{{ user.username }}'s Profile
 {% endblock %}
 
 {% block body_block %}
-	<div id="Home">
-		<h1>Profile:</h1>
-		<p>Here we'll show your profile</p>
-	</div>
+<div id="ProfileHome">
+    <h1>{{ user.username }}</h1> <!-- The title now displays the username -->
+    <img src="{{ user.userprofile.picture.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-img">
+    
+    {% if user.userprofile.bio %}
+        <p class="profile-user-bio">{{ user.userprofile.bio }}</p> <!-- Display the bio if it exists -->
+    {% else %}
+        <p class="profile-user-bio">This user hasn't written a bio yet.</p> <!-- Placeholder text if bio is empty -->
+    {% endif %}
+	
+    <a href="{% url 'melodyMeter:edit_profile' %}" class="btn btn-primary">Edit Profile</a> <!-- Edit Profile link -->
+    
+    <!-- Your ratings now floated to the right -->
+    <div class="profile-ratings">
+        <h2>Your Ratings</h2>
+        <ul>
+            <!-- Display album and song ratings here -->
+        </ul>
+    </div>
+</div>
 {% endblock %}

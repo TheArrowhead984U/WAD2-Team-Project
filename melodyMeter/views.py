@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm
 from melodyMeter.models import Album, Song
+from .models import UserProfile
 
 # Create your views here.
 
@@ -38,12 +39,32 @@ def show_album(request, album_name_slug):
 
 @login_required
 def profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)  # Retrieve the logged-in user's profile
+    context = {
+        'user_profile': user_profile
+    }
     return render(request, 'melodyMeter/profile.html')
 
 @login_required
 def addalbum(request):
     return HttpResponse("Add Album")
 
+@login_required
+def edit_profile(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)  # Retrieve the user's profile
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=request.user)  # Or handle as appropriate if the profile doesn't exist
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('melodyMeter:profile')  # Redirect to the profile view with the correct namespace
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'melodyMeter/edit_profile.html', {'form': form})
 def signup(request):
     registered = False
 
