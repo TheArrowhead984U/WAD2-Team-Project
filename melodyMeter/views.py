@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
@@ -14,13 +14,17 @@ def index(request):
     context_dict = {'boldmessage': 'Whoopydoo!'}
     return render(request, 'melodyMeter/index.html', context=context_dict)
 
+
 def albums(request):
-    album_list = Album.objects.order_by('-name')[:5]
+    album_list = Album.objects.order_by('-name')
+
+    
 
     context_dict = {}
     context_dict['albums'] = album_list
 
     return render(request, 'melodyMeter/albums.html', context=context_dict)
+
 
 def show_album(request, album_name_slug):
     context_dict = {}
@@ -38,9 +42,11 @@ def show_album(request, album_name_slug):
 
     return render(request, 'melodyMeter/album.html', context=context_dict)
 
+
 @login_required
 def profile(request):
     return render(request, 'melodyMeter/profile.html')
+
 
 @login_required
 def add_album(request):
@@ -74,6 +80,7 @@ def add_album(request):
             print('Error with form')
             print(form.errors)
     return render(request, 'melodyMeter/addalbum.html', {'form': form})
+
 
 def signup(request):
     registered = False
@@ -125,6 +132,12 @@ def login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'melodyMeter/login.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect(reverse('melodyMeter:index'))
+
 
 def get_alert_contents(request):
     #api = azapi.AZlyrics()
