@@ -40,6 +40,65 @@ body {
 	align-items: center;
 }
 
+/* ALBUM LISTING CSS */
+
+#albumList {
+	/*content: center;*/
+	text-align: center;
+	/*vertical-align: center;*/
+}
+
+#albumList::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+.album {
+	align-items: center;
+	content: center;
+	text-align: center;
+	background-color: #1b1b36;
+	float: left;
+	width: 19%;
+	border-radius: 25px;
+	padding: 2px;
+	margin: 5px;
+	height: 500px;
+}
+
+.album:hover {
+	/*background-color: #24244f;*/
+	color: lightgrey;
+	filter: grayscale(0.5);
+}
+
+.albumImg {
+	width: 75%;
+	height: auto;
+}
+
+.albumCover {
+	height: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.albumHeading {
+	align-items: center;
+	/*content: center;
+	text-align: center;*/
+	display: flex;
+	justify-content: center;
+	border-radius: 25px;
+	background-color: #24244f;
+	width: auto;
+	height: 20%;
+}
+
+/* POPUP CSS */
+
 .popup .close {
 	position: absolute;
 	top: 1%;

@@ -9,14 +9,18 @@ Albums
 	<div class="contentBox">
 		<h1>Albums:</h1>
 		{% if albums %}
-		<ul>
+		<div id="albumList">
 			{% for album in albums %}
-				<li>
-					<a href="{% url 'melodyMeter:show_album' album.slug %}">{{ album.name }}</a>
-				</li>
-				<br />
+				<a href="{% url 'melodyMeter:show_album' album.slug %}" class="album">
+					<div class="albumHeading">
+						{{ album.name }} - {{ album.year }}
+					</div>
+					<div class="albumCover">
+						<img src="{{ MEDIA_URL }}{{ album.cover }}" class="albumImg">
+					</div>
+				</a>
 			{% endfor %}
-		</ul>
+		</div>
 		{% else %}
 		<strong>There are no albums present.</strong>
 		{% endif %}
