@@ -11,3 +11,7 @@ Profile
 		<p>Here we'll show your profile</p>
 	</div>
 {% endblock %}
+
+{% block bottombar %}
+	<li><a class="bar-entry" href="{% url 'melodyMeter:logout' %}">Logout</a></li>
+{% endblock %}

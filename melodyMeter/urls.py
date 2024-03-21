@@ -7,6 +7,7 @@ urlpatterns = [
         path('', views.index, name='index'),
         path('albums/', views.albums, name='albums'),
         path('log-in/', views.login, name='login'),
+        path('logout', views.logout, name='logout'),
         path('sign-up/', views.signup, name='signup'),
         path('profile/', views.profile, name='profile'),
         path('get-alert-contents/', views.get_alert_contents, name='get_alert_contents'),
