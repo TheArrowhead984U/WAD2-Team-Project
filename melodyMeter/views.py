@@ -17,8 +17,11 @@ def index(request):
 
 
 def albums(request):
-    album_list = Album.objects.order_by('-rating')
-
+    query = request.GET.get("q")
+    if query:
+        album_list = Album.objects.filter(name__icontains=query).order_by('-rating')
+    else:
+        album_list = Album.objects.order_by('-rating')
     context_dict = {}
     context_dict['albums'] = album_list
 

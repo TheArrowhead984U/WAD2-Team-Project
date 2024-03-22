@@ -68,7 +68,16 @@ def populate():
             "project regeneration vol. 2": {
                 "artist": "static-x",
                 "image": "projectregeneration.jpg"
+            },
+            "After Hours": {
+                "artist": "The Weeknd",
+                "image": "after.jpg"
+            },
+            "All Or Nothing": {
+                "artist": "Jay Sean",
+                "image": "jay.jpg"
             }
+
     }
 
     albumList = []
