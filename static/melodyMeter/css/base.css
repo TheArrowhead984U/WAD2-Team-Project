@@ -564,19 +564,11 @@ body {
 	/*content: center;*/
 	text-align: center;
 	display: flex;
-<<<<<<< HEAD
-	/* Fixed height, adjust as needed */
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 10px;
-    
-=======
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 10px;
 	
 	/*vertical-align: center;*/
->>>>>>> a41ad4ea0caa744c705846419022899f0ca7c4a9
 }
 
 
@@ -593,14 +585,6 @@ body {
 	flex: 1 0 18%; 
 	max-width: 18%;
 	border-radius: 25px;
-<<<<<<< HEAD
-	padding: 2px;
-	margin: 5px;
-	height: 500px;
-	scroll-behavior: smooth;
-	scrollbar-width: thin;
-	scrollbar-color: red;
-=======
 	padding: 8px;
 	display: flex;
 	flex-direction: column;
@@ -608,7 +592,6 @@ body {
 	height: auto;
 	margin-bottom: 20px;
 	overflow: hidden;
->>>>>>> a41ad4ea0caa744c705846419022899f0ca7c4a9
 }
 
 .album:hover {
