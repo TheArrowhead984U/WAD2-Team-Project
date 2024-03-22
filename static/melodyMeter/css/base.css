@@ -143,6 +143,11 @@ body {
 #albumList {
 	/*content: center;*/
 	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	
 	/*vertical-align: center;*/
 }
 
@@ -153,16 +158,18 @@ body {
 }
 
 .album {
-	align-items: center;
-	content: center;
-	text-align: center;
+
 	background-color: #1b1b36;
-	float: left;
-	width: 19%;
+	flex: 1 0 18%; 
+	max-width: 18%;
 	border-radius: 25px;
-	padding: 2px;
-	margin: 5px;
-	height: 500px;
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: auto;
+	margin-bottom: 20px;
+	overflow: hidden;
 }
 
 .album:hover {
@@ -172,7 +179,7 @@ body {
 }
 
 .album2 {
-	align-items: center;
+	/* align-items: center;
 	content: center;
 	text-align: center;
 	background-color: #272e73;
@@ -181,9 +188,39 @@ body {
 	border-radius: 15px;
 	padding: 2px;
 	margin: 5px;
+	height: 200px; */
+	
+	align-items: center;
+	background-color: #272e73;
+	margin: 5px;
+	flex: 0 1 18%; /* Adjusted for responsive margins */
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
+	padding: 2px;
 	height: 200px;
 }
+@media (max-width: 1200px) {
+	.album {
+	  flex-basis: calc(20% - 10px);
+	  max-width: calc(20% - 10px);
+	}
+  }
 
+  /* Adjust for smaller screens if needed */
+@media (max-width: 768px) {
+	.album {
+	  flex-basis: calc(50% - 10px);
+	  max-width: calc(50% - 10px);
+	}
+  }
+  
+  @media (max-width: 480px) {
+	.album {
+	  flex-basis: 100%;
+	  max-width: 100%;
+	}
+  }
 .album2:hover {
 	/*background-color: #24244f;*/
 	color: lightgrey;
@@ -191,28 +228,39 @@ body {
 }
 
 .albumImg {
-	width: 75%;
-	height: auto;
+	/* width: 75%;
+	height: auto; */
+
+	width: 100%; /* Ensure the image takes the full width of its container */
+	height: auto; /* Height is auto to maintain aspect ratio */
+	object-fit: cover; /* Cover the container without stretching */
+	
+
 }
 
 .albumCover {
-	height: 80%;
+	width: 100%; /* Cover width is full container width */
+	height: auto; /* Height is auto to maintain aspect ratio */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
 .albumHeading {
-	align-items: center;
-	/*content: center;
-	text-align: center;*/
-	display: flex;
-	justify-content: center;
-	border-radius: 25px;
+	text-align: center;
 	background-color: #24244f;
-	width: auto;
-	height: 20%;
+	color: white;
+	padding: 5px;
+	border-radius: 15px;
 }
+
+.albumTitle, .albumScore {
+	font-size: 0.9em; /* Reduced font size */
+	text-align: center;
+	display: block;
+  }
+  
+
 
 /* POPUP CSS */
 
@@ -233,7 +281,7 @@ body {
 	text-align: center;
 	position: absolute;
 	z-index: 2;
-	#margin: auto;
+	margin: auto;
 	width: 25%;
 	height: 80%;
 	visibility: hidden;
@@ -346,10 +394,10 @@ li a.bar-entry:hover {
 
 #profileHome .profile-img {
 	border-radius: 50%;
-    	width: 200px; /* Fixed width */
-    	height: 200px; /* Fixed height */
-    	object-fit: cover; /* Adjust as necessary */
-    	margin-bottom: 20px; /* Adds some space below the image */
+	width: 200px; /* Fixed width */
+	height: 200px; /* Fixed height */
+	object-fit: cover; /* Adjust as necessary */
+	margin-bottom: 20px; /* Adds some space below the image */
 	border: 5px solid #272e73
 }
 
