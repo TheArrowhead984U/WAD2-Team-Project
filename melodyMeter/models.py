@@ -33,7 +33,7 @@ class Album(models.Model):
     artist = models.CharField(max_length=128)
     year = models.IntegerField(default=0)
     cover = models.ImageField(upload_to='album_covers', blank=True)
-    rating = models.DecimalField(max_digits = 3, decimal_places = 2, default=1)
+    rating = models.DecimalField(max_digits = 3, decimal_places = 2, default=0)
 
     def save(self, *args, **kwargs):
         self.name = capitalise(self.name)

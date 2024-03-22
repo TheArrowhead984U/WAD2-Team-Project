@@ -16,11 +16,9 @@ def clear():
     if superuser:
         User.objects.exclude(username=superuser.username).delete()
         UserProfile.objects.exclude(user=superuser).delete()
-        Album.objects.all().delete()
-        Song.objects.all().delete()
-        SongRating.objects.all().delete()
-    else:
-        print("No superuser found No action taken")
+    Album.objects.all().delete()
+    Song.objects.all().delete()
+    SongRating.objects.all().delete()
 
 def populate():
 
