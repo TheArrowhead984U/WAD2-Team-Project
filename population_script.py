@@ -13,8 +13,9 @@ from django.db.models import Avg
 
 def clear():
     superuser = User.objects.filter(is_superuser=True).first()
-    User.objects.exclude(username=superuser.username).delete()
-    UserProfile.objects.exclude(user=superuser).delete()
+    if superuser:
+        User.objects.exclude(username=superuser.username).delete()
+        UserProfile.objects.exclude(user=superuser).delete()
     Album.objects.all().delete()
     Song.objects.all().delete()
     SongRating.objects.all().delete()

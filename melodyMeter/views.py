@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -231,8 +231,8 @@ def rate_song(request, album_name_slug, song_id):
             ratingObj.rating = rating
             ratingObj.save()
             calcAlbumRating(Album.objects.get(slug=album_name_slug))
-            return HttpResponse(status=204)
+            return redirect(reverse('melodyMeter:show_album', args=[album_name_slug]))
         else:
-            return HttpResponse('No rating provided!', status=400)
+            return HttpResponse('No raing provided!', status=400)
     else:
         return HttpResponseNotAllowed(['POST'])
