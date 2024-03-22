@@ -32,21 +32,23 @@ def show_album(request, album_name_slug):
         album = Album.objects.get(slug=album_name_slug)
 
         songs = Song.objects.filter(album=album)
-        song_ratings = []
+        if request.user.is_authenticated:
+            song_ratings = [(song, None) for song in songs]
 
-        for song in songs:
-            try:
-                song_rating = SongRating.objects.get(song=song, user=request.user)
-                song_ratings.append((song, song_rating.rating))
-            except SongRating.DoesNotExist:
-                song_ratings.append((song, None))
-        print(song_ratings)
-
+            for song in songs:
+                try:
+                    song_rating = SongRating.objects.get(song=song, user=request.user)
+                    song_ratings.append((song, song_rating.rating))
+                except SongRating.DoesNotExist:
+                    song_ratings.append((song, None))
+            print(song_ratings)
+        else:
+            song_ratings = [(song, None) for song in songs]
         
 
         context_dict['album'] = album
         context_dict['songs'] = song_ratings
-        context_dict['userRating'] = round(sum([rating[1] for rating in song_ratings])/len(song_ratings), 2)
+        context_dict['userRating'] = (round(sum([rating[1] for rating in song_ratings])/len(song_ratings), 2) if request.user.is_authenticated else None)
         print(context_dict['userRating'])
     except Album.DoesNotExist:
         context_dict['album'] = None
