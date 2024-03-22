@@ -1,5 +1,5 @@
 from django.contrib import admin
-from melodyMeter.models import Album, Song, UserProfile
+from melodyMeter.models import Album, Song, UserProfile, SongRating
 
 class AlbumAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
@@ -8,3 +8,4 @@ class AlbumAdmin(admin.ModelAdmin):
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Song)
 admin.site.register(UserProfile)
+admin.site.register(SongRating)

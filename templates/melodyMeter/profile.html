@@ -2,16 +2,42 @@
 {% load static %}
 
 {% block title_block %}
-Profile
+{{ user.username }}'s Profile
 {% endblock %}
 
 {% block body_block %}
-	<div class="contentBox">
-		<h1>Profile:</h1>
-		<p>Here we'll show your profile</p>
-	</div>
+	<div id="profileHome">
+		<h1>{{ user.username }}</h1> <!-- The title now displays the username -->
+		<img src="{{ user.userprofile.picture.url }}" alt="{{ user.username }}'s Profile Picture" class="profile-img">
+
+		{% if user.userprofile.bio %}
+			<p class="profile-user-bio">{{ user.userprofile.bio }}</p> <!-- Display the bio if it exists -->
+		{% else %}
+		    	<p class="profile-user-bio">This user hasn't written a bio yet.</p> <!-- Placeholder text if bio is empty -->
+		{% endif %}
+
+		<!-- Your ratings now floated to the right -->
+	    	{% if alb_ratings %}
+			<h1>Your Top Albums</h1>
+			<div id="albumList">
+				{% for rating in alb_ratings %}
+					<a href="{% url 'melodyMeter:show_album' rating.0.slug %}" class="album2">
+						<div class="albumHeading">
+							{{ rating.0.name }} - {{ rating.0.year }} - {{ rating.1 }}
+						</div>
+						<div class="albumCover">
+							<img src="{{ MEDIA_URL }}{{ rating.0.cover }}" class="albumImg">
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+	    	{% else %}
+			<strong>There are no albums present.</strong>
+	    	{% endif %}
+	</div>	
 {% endblock %}
 
 {% block bottombar %}
+	<li><a class="bar-entry" href="{% url 'melodyMeter:edit_profile' %}">Edit Profile</a></li>
 	<li><a class="bar-entry" href="{% url 'melodyMeter:logout' %}">Logout</a></li>
 {% endblock %}

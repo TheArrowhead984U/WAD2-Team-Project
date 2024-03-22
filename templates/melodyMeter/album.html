@@ -9,21 +9,31 @@
 	<div class='contentBox'>
 		<div class="popup" id="myPopup">Popup text</div>
 		{% if album %}
-		<h1>{{ album.name }} - {{ album.year }}</h1>
+		<h1>{{ album.name }} - {{ album.year }} {% if album.rating != 0 %} - {{ album.rating }}{% endif %}</h1>
 			{% if songs %}
-				<ul id="songList">
+				<table id="songList">
 					{% for song in songs %}
-						<li>
-							{{ song.name }}
-							<button class="alertButton" 
-								data-artist="{{ album.artist }}" 
-								data-song-id="{{ song.name }}" 
-								type="button">Lyrics
-							</button>
-						</li>
-						<br />
+						<tr>
+							<td class="songName">{{ song.0.name }}</td>
+							<td class="songRating">
+								<form action="{% url 'melodyMeter:rate-song' album.slug song.0.id %}" method='post' class='rating'>
+									{% csrf_token %}
+									{% for rating in "54321" %}
+										<input type="radio" id="{{ song.0.id }}_star{{ rating }}" name="{{ song.0.id }}_rating" value="{{ rating }}" {% if song.1 == rating|add:"0" %}checked{% endif %}/>
+										<label for="{{ song.0.id }}_star{{ rating }}" title="{{ rating }} stars"></label>
+									{% endfor %}
+								</form>
+							</td>
+							<td class="songLyrics">
+								<button class="alertButton" 
+									data-artist="{{ album.artist }}" 
+									data-song-id="{{ song.name }}" 
+									type="button">Lyrics
+								</button>
+							</td>
+						</tr>
 					{% endfor %}
-				</ul>
+				</table>
 			{% else %}
 				<strong>No songs currently in album.</strong>
 			{% endif %}
@@ -33,6 +43,19 @@
 	</div>
 
 	<script>
+
+		var radioButtons = document.querySelectorAll('.rating')
+
+		radioButtons.forEach(function(form) {
+			form.addEventListener('click', function(event) {
+				console.log('button clicked')
+				if (event.target.matches('input[type="radio"]')) {
+					console.log('submitting form')
+					form.submit();
+				}
+			});
+		});
+
 		function myFunction() {
 			var popup = document.getElementById("myPopup");
                         popup.innerHTML = '';

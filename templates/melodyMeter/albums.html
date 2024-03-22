@@ -13,7 +13,7 @@ Albums
 			{% for album in albums %}
 				<a href="{% url 'melodyMeter:show_album' album.slug %}" class="album">
 					<div class="albumHeading">
-						{{ album.name }} - {{ album.year }}
+						{{ album.name }} - {{ album.year }}{% if album.rating != 0 %} - {{ album.rating }}{% endif %}
 					</div>
 					<div class="albumCover">
 						<img src="{{ MEDIA_URL }}{{ album.cover }}" class="albumImg">
@@ -25,22 +25,6 @@ Albums
 		<strong>There are no albums present.</strong>
 		{% endif %}
 	</div>
-
-	<script>
-		const output = document.querySelector('albumHeading');
-		const outputContainer = document.querySelector('album');
-		
-		function resize_to_fit() {
-			let fontSize = window.getComputedStyle(output).fontSize;
-			output.style.fontSize = (parseFloat(fontSize) - 1) + 'px';
-
-			if (output.clientHeight >= outputContainer.clientHeight) {
-				resize_to_fit();
-			}
-		}
-
-		document.addEventListener('DOMContentLoaded', resize_to_fit(), false);
-	</script>
 {% endblock %}
 
 {% block bottombar %}
