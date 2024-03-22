@@ -1,0 +1,27 @@
+{% extends 'melodyMeter/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Edit Profile
+{% endblock %}
+
+{% block body_block %}
+	<div class="contentBox">
+		<h1>Edit your profile:</h1>
+		<div>
+			<form id="UserProfileForm" method="post" action="{% url 'melodyMeter:edit_profile' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.help_text }}
+				{{ field }}
+				<br />
+			{% endfor %}
+			<input type="submit" name="submit" value="Make Change" />
+			</form>
+		</div>
+	</div>
+{% endblock %}

@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 from melodyMeter.forms import UserForm, UserProfileForm, AlbumForm
-from melodyMeter.models import Album, Song
+from melodyMeter.models import Album, Song, SongRating, UserProfile
 import json
 from ytmusicapi import YTMusic
 
@@ -16,9 +17,7 @@ def index(request):
 
 
 def albums(request):
-    album_list = Album.objects.order_by('-name')
-
-    
+    album_list = Album.objects.order_by('-rating')
 
     context_dict = {}
     context_dict['albums'] = album_list
@@ -33,20 +32,70 @@ def show_album(request, album_name_slug):
         album = Album.objects.get(slug=album_name_slug)
 
         songs = Song.objects.filter(album=album)
+        song_ratings = []
 
-        context_dict['songs'] = songs
+        for song in songs:
+            try:
+                song_rating = SongRating.objects.get(song=song, user=request.user)
+                song_ratings.append((song, song_rating.rating))
+            except SongRating.DoesNotExist:
+                song_ratings.append((song, None))
+        print(song_ratings)
+
+        
+
         context_dict['album'] = album
+        context_dict['songs'] = song_ratings
+        context_dict['userRating'] = round(sum([rating[1] for rating in song_ratings])/len(song_ratings), 2)
+        print(context_dict['userRating'])
     except Album.DoesNotExist:
         context_dict['album'] = None
         context_dict['songs'] = None
+        context_dict['userRating']= None
 
     return render(request, 'melodyMeter/album.html', context=context_dict)
 
 
 @login_required
 def profile(request):
-    return render(request, 'melodyMeter/profile.html')
+    user_profile = UserProfile.objects.get(user=request.user)
 
+    user_ratings = SongRating.objects.filter(user=request.user)
+    albRatings = {}
+    for rating in user_ratings:
+        albRatings.update({rating.song.album: (albRatings[rating.song.album] if rating.song.album in albRatings.keys() else [])+[rating.rating]})
+
+    for alb in albRatings:
+        albRatings[alb] = round(sum(albRatings[alb]) / len(albRatings[alb]), 2)
+
+    sorted_alb = dict(sorted(albRatings.items(), key=lambda item: item[1], reverse=True))
+
+    albRatings = tuple(sorted_alb.items())[:5]
+    print(albRatings[:5])
+
+
+    context_dict = {}
+    context_dict['user_profile'] = user_profile
+    context_dict['alb_ratings'] = albRatings
+    return render(request, 'melodyMeter/profile.html', context=context_dict)
+
+@login_required
+def edit_profile(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('melodyMeter:profile')
+
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'melodyMeter/edit_profile.html', {'form': form})
 
 @login_required
 def add_album(request):
@@ -140,12 +189,6 @@ def logout(request):
 
 
 def get_alert_contents(request):
-    #api = azapi.AZlyrics()
-    
-    #api.artist = request.GET.get('artist')
-    #api.title = request.GET.get('song_id')
-    #api.getLyrics()
-
     ytmusic = YTMusic()
     res = ytmusic.search(request.GET.get('artist') + ' ' + request.GET.get('song_id'))
     for i in range(len(res)):
@@ -156,9 +199,37 @@ def get_alert_contents(request):
 
     return JsonResponse({'alert_contents':alert_contents})
 
-    #if api.lyrics == '':
-    #    alert_contents = "Couldn't find any lyrics for this song."
-    #else:
-    #    alert_contents = api.lyrics#"This is the generated msg."
+def calcAlbumRating(album):
+    songs = Song.objects.filter(album=album)
 
-    #return JsonResponse({'alert_contents':alert_contents})
+    totalRating = 0
+    noSongsRated = 0
+
+    for song in songs:
+        ratings = SongRating.objects.filter(song=song)
+
+        if ratings:
+            avgRating = ratings.aggregate(Avg('rating'))['rating__avg']
+            if avgRating is not None:
+                totalRating += avgRating
+                noSongsRated += 1
+    if noSongsRated > 0:
+        albAvg = totalRating / noSongsRated
+        album.rating = albAvg
+        album.save()
+        print(albAvg)
+
+def rate_song(request, album_name_slug, song_id):
+    if request.method == 'POST':
+        song = get_object_or_404(Song, id=song_id)
+        rating = request.POST.get(str(song_id) + '_rating')
+        if rating:
+            ratingObj, created = SongRating.objects.get_or_create(song=song, user=request.user)
+            ratingObj.rating = rating
+            ratingObj.save()
+            calcAlbumRating(Album.objects.get(slug=album_name_slug))
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse('No rating provided!', status=400)
+    else:
+        return HttpResponseNotAllowed(['POST'])

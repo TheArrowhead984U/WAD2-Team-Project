@@ -40,6 +40,104 @@ body {
 	align-items: center;
 }
 
+.alertButton {
+	font-size: 30px;
+}
+
+/* SONG LISTING CSS */
+#songList {
+	width: 100%;
+	overflow: auto;
+}
+
+.songName {
+	width: 30%;
+	text-align: center;
+}
+
+.songRating {
+	width: 50%;
+	text-align: center;
+}
+
+/*
+#star-rating {
+	display: inline-flex;
+	background: transparent;
+}
+
+#star-rating input[type="radio"] {
+	display: none;
+}
+
+#star-rating label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('/static/melodyMeter/star.png') no-repeat;
+	cursor: pointer;
+}
+
+#star-rating input[type="radio"]:checked + label {
+	background: url('/static/melodyMeter/star-checked.png') no-repeat;
+}
+*/
+
+.rating {
+	margin-top: auto;
+	direction: rtl;
+}
+
+.rating:not(:checked) > input {
+    position: absolute;
+    /*top: -9999px;*/
+    clip: rect(0, 0, 0, 0);
+}
+
+.rating:not(:checked) > label {
+    /*float: right;*/
+    width: 1em;
+    padding: 0 0.1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 200%;
+    line-height: 1.2;
+    color: #ddd;
+}
+
+.rating:not(:checked) > label:before {
+    content: '★';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+.rating > label:active {
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+.songLyrics {
+	width: 20%;
+	justify-content: center;
+}
+
 /* ALBUM LISTING CSS */
 
 #albumList {
@@ -68,6 +166,25 @@ body {
 }
 
 .album:hover {
+	/*background-color: #24244f;*/
+	color: lightgrey;
+	filter: grayscale(0.5);
+}
+
+.album2 {
+	align-items: center;
+	content: center;
+	text-align: center;
+	background-color: #272e73;
+	float: left;
+	width: 18%;
+	border-radius: 15px;
+	padding: 2px;
+	margin: 5px;
+	height: 200px;
+}
+
+.album2:hover {
 	/*background-color: #24244f;*/
 	color: lightgrey;
 	filter: grayscale(0.5);
@@ -213,4 +330,63 @@ li a.bar-entry:hover {
   	background-color: #000099;
 }
 
+/* PROFILE CSS */
+#profileHome {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center-align items horizontally */
+    justify-content: flex-start; /* Align items to the start of the flex container vertically */
+    max-width: 900px; /* Adjust the max-width as necessary */
+    margin: auto; /* Center the entire block on the page */
+    padding: 20px;
+	margin-top: 20;
+	padding-top: 95px;
 
+}
+
+#profileHome .profile-img {
+	border-radius: 50%;
+    	width: 200px; /* Fixed width */
+    	height: 200px; /* Fixed height */
+    	object-fit: cover; /* Adjust as necessary */
+    	margin-bottom: 20px; /* Adds some space below the image */
+	border: 5px solid #272e73
+}
+
+#profileHome .profile-username {
+    margin-bottom: 10px; /* Adds some space below the username */
+}
+
+#profileHome .profile-ratings {
+    display: flex; /* Use Flexbox for ratings */
+    width: 100%; /* Full width */
+    height: 50%;
+    justify-content: space-evenly; /* Distribute space evenly around items */
+    margin-top: 20px; /* Adds some space above the ratings */
+}
+
+#EditProfileSection {
+	padding-top: 95px;
+    margin: 20px;
+
+}
+
+.edit-profile-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.edit-profile-form .form-group {
+    margin-bottom: 30px;
+}
+
+#profile-preview {
+    max-width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    margin-top: 20px;
+    display: block;
+    margin-right: auto;
+
+}

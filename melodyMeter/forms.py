@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('picture',)
+        fields = ('picture', 'bio')
 
 class AlbumForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Album Title: ", label="Album Name")
@@ -24,3 +24,5 @@ class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = ('name','artist','cover')
+
+
