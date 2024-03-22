@@ -14,7 +14,8 @@ Albums
 				<a href="{% url 'melodyMeter:show_album' album.slug %}" class="album">
 					<div class="albumHeading">
 						{{ album.name }} - {{ album.year }}
-						{% if album.rating != 0 %}Aggregate Score: {{ album.rating }}{% endif %}
+						<br />
+						{% if album.rating != 0 %}Avg Score: {{ album.rating }}{% endif %}
 					</div>
 					<div class="albumCover">
 						<img src="{{ MEDIA_URL }}{{ album.cover }}" class="albumImg">

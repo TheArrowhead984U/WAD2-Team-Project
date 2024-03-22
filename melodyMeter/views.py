@@ -41,7 +41,6 @@ def show_album(request, album_name_slug):
                     song_ratings.append((song, song_rating.rating))
                 except SongRating.DoesNotExist:
                     song_ratings.append((song, 0))
-            print(song_ratings)
         else:
             song_ratings = [(song, 0) for song in songs]
         
@@ -49,7 +48,6 @@ def show_album(request, album_name_slug):
         context_dict['album'] = album
         context_dict['songs'] = song_ratings
         context_dict['userRating'] = (round(sum([rating[1] for rating in song_ratings])/len(song_ratings), 2))
-        print(context_dict['userRating'])
     except Album.DoesNotExist:
         context_dict['album'] = None
         context_dict['songs'] = None
@@ -72,8 +70,7 @@ def profile(request):
 
     sorted_alb = dict(sorted(albRatings.items(), key=lambda item: item[1], reverse=True))
 
-    albRatings = tuple(sorted_alb.items())[:5]
-    print(albRatings[:5])
+    albRatings = tuple(sorted_alb.items())[:4]
 
 
     context_dict = {}
@@ -104,7 +101,6 @@ def add_album(request):
     form = AlbumForm()
 
     if request.method == 'POST':
-        print('Made it to view')
         form = AlbumForm(request.POST, request.FILES)
         if form.is_valid():
             album_instance = form.save(commit=False)
@@ -117,9 +113,6 @@ def add_album(request):
                     break
             alb = ytmusic.get_album(res[i]['browseId'])
             songs = alb['tracks']
-            for song in list(songs):
-                print(song['title']) 
-            print('Success')
             album_instance.cover = request.FILES['cover']
             album_instance.year = alb['year']
             album_instance.save() 
@@ -219,7 +212,6 @@ def calcAlbumRating(album):
         albAvg = totalRating / noSongsRated
         album.rating = albAvg
         album.save()
-        print(albAvg)
 
 @login_required
 def rate_song(request, album_name_slug, song_id):

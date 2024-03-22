@@ -143,6 +143,10 @@ body {
 #albumList {
 	/*content: center;*/
 	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
 	/*vertical-align: center;*/
 }
 
@@ -153,16 +157,25 @@ body {
 }
 
 .album {
-	align-items: center;
+	/*align-items: center;
 	content: center;
-	text-align: center;
+	text-align: center;*/
 	background-color: #1b1b36;
-	float: left;
-	width: 19%;
+	/*float: left;
+	width: 19%;*/
+	flex: 1 0 18%;
+	max-width: 18%;
 	border-radius: 25px;
-	padding: 2px;
+	/*padding: 2px;
 	margin: 5px;
-	height: 500px;
+	height: 500px;*/
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: auto;
+	margin-bottom: 20px;
+	overflow: hidden;
 }
 
 .album:hover {
@@ -172,7 +185,7 @@ body {
 }
 
 .album2 {
-	align-items: center;
+	/*align-items: center;
 	content: center;
 	text-align: center;
 	background-color: #272e73;
@@ -181,7 +194,38 @@ body {
 	border-radius: 15px;
 	padding: 2px;
 	margin: 5px;
+	height: 200px;*/
+	align-items: center;
+	background-color: #272e73;
+	margin: 5px;
+	flex: 0 1 18%; /* Adjusted for responsive margins */
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
+	padding: 2px;
 	height: 200px;
+}
+
+@media (max-width: 1200px) {
+	.album {
+	  flex-basis: calc(20% - 10px);
+	  max-width: calc(20% - 10px);
+	}
+  }
+
+  /* Adjust for smaller screens if needed */
+@media (max-width: 768px) {
+	.album {
+	  flex-basis: calc(50% - 10px);
+	  max-width: calc(50% - 10px);
+	}
+  }
+
+@media (max-width: 480px) {
+	.album {
+	  flex-basis: 100%;
+	  max-width: 100%;
+	}
 }
 
 .album2:hover {
@@ -193,25 +237,36 @@ body {
 .albumImg {
 	width: 75%;
 	height: auto;
+	object-fit: cover;
 }
 
 .albumCover {
-	height: 80%;
+	height: auto;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
 .albumHeading {
-	align-items: center;
-	/*content: center;
-	text-align: center;*/
-	display: flex;
+	/*align-items: center;
+	/*content: center;*/
+	text-align: center;
+	/*display: flex;
 	justify-content: center;
-	border-radius: 25px;
+	border-radius: 25px;*/
 	background-color: #24244f;
-	width: auto;
-	height: 20%;
+	/*width: auto;
+	height: 20%;*/
+	color: white;
+	padding: 5px;
+	border-radius: 15px;
+}
+
+.albumTitle, .albumScore {
+	font-size: 0.9em; /* Reduced font size */
+	text-align: center;
+	display: block;
 }
 
 /* POPUP CSS */
@@ -366,7 +421,7 @@ li a.bar-entry:hover {
 }
 
 #EditProfileSection {
-	padding-top: 95px;
+    padding-top: 95px;
     margin: 20px;
 
 }
@@ -381,12 +436,13 @@ li a.bar-entry:hover {
 }
 
 #profile-preview {
-    max-width: 150px;
-    height: auto;
-    border: 1px solid #ddd;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     margin-top: 20px;
     display: block;
     margin-right: auto;
+    object-fit: cover;
+    border: 5px solid #272e73;
 
 }
