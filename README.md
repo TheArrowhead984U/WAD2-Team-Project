@@ -67,7 +67,7 @@ Visit `http://localhost:8000` in your web browser to access the application.
 
 ## Acknowledgments
 
-- 
+- 'ytmusicapi' to get albums and song details 
 
 ## Team 8D Members
 
