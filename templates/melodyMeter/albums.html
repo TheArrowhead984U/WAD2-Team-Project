@@ -13,7 +13,8 @@ Albums
 			{% for album in albums %}
 				<a href="{% url 'melodyMeter:show_album' album.slug %}" class="album">
 					<div class="albumHeading">
-						{{ album.name }} - {{ album.year }}{% if album.rating != 0 %} - {{ album.rating }}{% endif %}
+						{{ album.name }} - {{ album.year }}
+						{% if album.rating != 0 %}Aggregate Score: {{ album.rating }}{% endif %}
 					</div>
 					<div class="albumCover">
 						<img src="{{ MEDIA_URL }}{{ album.cover }}" class="albumImg">
@@ -22,7 +23,7 @@ Albums
 			{% endfor %}
 		</div>
 		{% else %}
-		<strong>There are no albums present.</strong>
+			<strong>There are no albums present.</strong>
 		{% endif %}
 	</div>
 {% endblock %}

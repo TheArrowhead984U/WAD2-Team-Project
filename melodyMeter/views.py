@@ -40,12 +40,18 @@ def show_album(request, album_name_slug):
                 song_ratings.append((song, song_rating.rating))
             except SongRating.DoesNotExist:
                 song_ratings.append((song, None))
+        print(song_ratings)
+
+        
 
         context_dict['album'] = album
         context_dict['songs'] = song_ratings
+        context_dict['userRating'] = round(sum([rating[1] for rating in song_ratings])/len(song_ratings), 2)
+        print(context_dict['userRating'])
     except Album.DoesNotExist:
         context_dict['album'] = None
         context_dict['songs'] = None
+        context_dict['userRating']= None
 
     return render(request, 'melodyMeter/album.html', context=context_dict)
 

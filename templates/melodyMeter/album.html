@@ -9,7 +9,9 @@
 	<div class='contentBox'>
 		<div class="popup" id="myPopup">Popup text</div>
 		{% if album %}
-		<h1>{{ album.name }} - {{ album.year }} {% if album.rating != 0 %} - {{ album.rating }}{% endif %}</h1>
+		<h1>{{ album.name }} - {{ album.year }}</h1>
+		<h3>{% if album.rating != 0 %} Avg. Rating: {{ album.rating }}{% endif %}</h3>
+		<h3>{% if userRating and userRating != 0 %} Your Rating: {{ userRating }}{% endif %}</h3>
 			{% if songs %}
 				<table id="songList">
 					{% for song in songs %}
